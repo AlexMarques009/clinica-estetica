@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumière | Clínica de Estética Facial</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- AOS Animation Library CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Swiper CSS (Para o carrossel de avaliações) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        rose: {
+                            50: '#fff1f2', 100: '#ffe4e6', 200: '#fecdd3', 300: '#fda4af',
+                            400: '#fb7185', 500: '#f43f5e', 600: '#e11d48', 700: '#be123c',
+                            800: '#9f1239', 900: '#881337',
+                        },
+                        nude: '#FDFBF7'
+                    },
+                    fontFamily: {
+                        sans: ['Lato', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .whatsapp-float {
+            animation: pulse-green 2s infinite;
+        }
+
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        .img-overlay::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
+            border-radius: inherit;
+        }
+
+        /* Swiper Custom */
+        .swiper-pagination-bullet-active {
+            background-color: #f43f5e !important;
+        }
+    </style>
+</head>
+<body class="font-sans bg-nude text-gray-800 antialiased selection:bg-rose-200 selection:text-rose-900">
+
+    <script>
+        const whatsappNumber = "5511999999999"; 
+        const whatsappMsg = "Olá! Gostaria de agendar uma avaliação na Clínica Lumière.";
+        const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMsg)}`;
+    </script>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <i class="fa-solid fa-spa text-rose-500 text-2xl mr-2"></i>
+                    <span class="font-serif text-2xl font-bold tracking-wider text-gray-900">Lumière</span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#sobre" onclick="this.blur()" class="text-gray-600 hover:text-rose-500 transition-colors font-medium">Sobre Nós</a>
+                    <a href="#servicos" onclick="this.blur()" class="text-gray-600 hover:text-rose-500 transition-colors font-medium">Serviços</a>
+                    <a href="#resultados" onclick="this.blur()" class="text-gray-600 hover:text-rose-500 transition-colors font-medium">Resultados</a>
+                    <a href="#contato" onclick="this.blur()" class="text-gray-600 hover:text-rose-500 transition-colors font-medium">Contato</a>
+                    <button onclick="window.open(whatsappLink, '_blank')" class="bg-rose-500 hover:bg-rose-600 text-white px-6 py-2.5 rounded-full shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center gap-2 font-medium">
+                        <i class="fa-brands fa-whatsapp text-lg"></i> Agende Agora
+                    </button>
+                </div>
+
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-rose-500 focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full shadow-lg">
+            <div class="px-4 pt-2 pb-6 space-y-2 flex flex-col">
+                <a href="#sobre" onclick="this.blur()" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-rose-500 hover:bg-rose-50 rounded-md">Sobre Nós</a>
+                <a href="#servicos" onclick="this.blur()" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-rose-500 hover:bg-rose-50 rounded-md">Serviços</a>
+                <a href="#resultados" onclick="this.blur()" class="block px-3 py-3 text-base font-medium text-gray-700 hover:text-rose-500 hover:bg-rose-50 rounded-md">Resultados</a>
+                <button onclick="window.open(whatsappLink, '_blank')" class="mt-4 w-full bg-[#25D366] text-white px-4 py-3 rounded-md shadow flex justify-center items-center gap-2 font-medium">
+                    <i class="fa-brands fa-whatsapp text-xl"></i> Fale no WhatsApp
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-24 pb-12 lg:pt-32 lg:pb-24 overflow-hidden min-h-[90vh] flex items-center">
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-rose-100 opacity-50 blur-3xl z-0"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-72 h-72 rounded-full bg-rose-200 opacity-40 blur-3xl z-0"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div data-aos="fade-right">
+                    <span class="text-rose-500 font-bold tracking-widest uppercase text-sm mb-4 block">Estética Facial Avançada</span>
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif text-gray-900 leading-tight mb-6">
+                        Realce sua beleza <br>
+                        <span class="text-rose-600 italic">natural</span> com cuidado e excelência.
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-8 leading-relaxed max-w-lg">
+                        Especialistas em harmonização e rejuvenescimento facial. Descubra a sua melhor versão através de tratamentos estéticos de alta tecnologia.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button onclick="window.open(whatsappLink, '_blank')" class="bg-rose-500 hover:bg-rose-600 text-white px-8 py-4 rounded-full shadow-lg hover:shadow-rose-500/30 transition-all transform hover:-translate-y-1 text-center font-medium text-lg flex justify-center items-center gap-2">
+                            Agendar Avaliação
+                        </button>
+                    </div>
+                </div>
+                <div class="relative hidden lg:block" data-aos="fade-left">
+                    <div class="relative w-full aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-white">
+                        <img src="https://www.maxfacial.com.br/blog/wp-content/uploads/2022/10/onde-fazer-o-botox-no-Tatuape-768x512.jpg" alt="Estética Facial" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Serviços Section -->
+    <section id="servicos" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-serif text-gray-900 mb-4">Serviços Exclusivos</h2>
+                <div class="w-24 h-1 bg-rose-200 mx-auto rounded-full"></div>
+                <p class="mt-4 text-gray-500">Tratamentos personalizados para realçar o que há de melhor em você.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Card Botox -->
+                <div class="bg-nude rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all group" data-aos="fade-up">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80" alt="Botox" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-serif font-bold text-gray-900 mb-2">Toxina Botulínica</h3>
+                        <p class="text-gray-600 mb-4 text-sm">Prevenção e suavização de rugas de expressão com aspecto leve e natural.</p>
+                        <button onclick="window.open(whatsappLink, '_blank')" class="text-rose-600 font-bold flex items-center gap-2 text-sm">Saber mais <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Card Preenchimento -->
+                <div class="bg-nude rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&w=600&q=80" alt="Preenchimento" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-serif font-bold text-gray-900 mb-2">Preenchimento Labial</h3>
+                        <p class="text-gray-600 mb-4 text-sm">Volume, hidratação e contorno definidos para lábios irresistíveis.</p>
+                        <button onclick="window.open(whatsappLink, '_blank')" class="text-rose-600 font-bold flex items-center gap-2 text-sm">Saber mais <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Card Bioestimuladores -->
+                <div class="bg-nude rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1552693673-1bf958298935?auto=format&fit=crop&w=600&q=80" alt="Bioestimuladores" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-serif font-bold text-gray-900 mb-2">Bioestimuladores</h3>
+                        <p class="text-gray-600 mb-4 text-sm">Estímulo natural de colagénio para combater a flacidez e melhorar a firmeza.</p>
+                        <button onclick="window.open(whatsappLink, '_blank')" class="text-rose-600 font-bold flex items-center gap-2 text-sm">Saber mais <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Card Fios de PDO -->
+                <div class="bg-nude rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all group" data-aos="fade-up">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1614806687313-25980d944063?auto=format&fit=crop&w=600&q=80" alt="Fios de PDO" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-serif font-bold text-gray-900 mb-2">Fios de PDO</h3>
+                        <p class="text-gray-600 mb-4 text-sm">Efeito lifting imediato e bioestimulação de colagénio sem cirurgia.</p>
+                        <button onclick="window.open(whatsappLink, '_blank')" class="text-rose-600 font-bold flex items-center gap-2 text-sm">Saber mais <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Card Limpeza de Pele -->
+                <div class="bg-nude rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=600&q=80" alt="Limpeza de Pele" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-serif font-bold text-gray-900 mb-2">Limpeza de Pele Premium</h3>
+                        <p class="text-gray-600 mb-4 text-sm">Remoção de impurezas, desintoxicação e hidratação profunda da face.</p>
+                        <button onclick="window.open(whatsappLink, '_blank')" class="text-rose-600 font-bold flex items-center gap-2 text-sm">Saber mais <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Card Harmonização / Promo -->
+                <div class="bg-gradient-to-br from-rose-400 to-rose-600 rounded-2xl shadow-xl p-8 flex flex-col justify-center items-center text-center text-white" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fa-solid fa-wand-magic-sparkles text-4xl mb-4"></i>
+                    <h3 class="text-2xl font-serif font-bold mb-4">Protocolo Full Face</h3>
+                    <p class="mb-8 opacity-90 text-sm leading-relaxed">Um plano completo de harmonização para equilibrar suas proporções faciais de forma única.</p>
+                    <button onclick="window.open(whatsappLink, '_blank')" class="bg-white text-rose-600 px-8 py-3 rounded-full font-bold shadow-lg hover:bg-rose-50 transition-colors">Avaliação Grátis</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resultados Antes e Depois -->
+    <section id="resultados" class="py-20 bg-nude overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="text-rose-500 font-bold tracking-widest uppercase text-sm mb-2 block">Transformações</span>
+                <h2 class="text-3xl md:text-4xl font-serif text-gray-900 mb-4">Nossos Resultados</h2>
+                <div class="w-24 h-1 bg-rose-200 mx-auto rounded-full"></div>
+                <p class="mt-6 text-gray-600 max-w-2xl mx-auto">Confira os resultados reais de pacientes que passaram por nossos protocolos de harmonização.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Resultado 1 -->
+                <div class="bg-white p-4 rounded-3xl shadow-lg" data-aos="fade-right">
+                    <div class="flex flex-col sm:flex-row gap-2 rounded-2xl overflow-hidden">
+                        <div class="relative w-full">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80" alt="Antes" class="w-full h-80 object-cover">
+                            <span class="absolute top-4 left-4 bg-black/50 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-md">Antes</span>
+                        </div>
+                        <div class="relative w-full">
+                            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=400&q=80" alt="Depois" class="w-full h-80 object-cover border-l-4 border-white sm:border-l-2">
+                            <span class="absolute top-4 right-4 bg-rose-500 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg">Depois</span>
+                        </div>
+                    </div>
+                    <div class="mt-6 text-center">
+                        <h4 class="font-serif font-bold text-xl text-gray-900">Harmonização Full Face</h4>
+                        <p class="text-gray-500 text-sm mt-1 italic">Protocolo de 3 sessões: Botox + Preenchimento</p>
+                    </div>
+                </div>
+
+                <!-- Resultado 2 -->
+                <div class="bg-white p-4 rounded-3xl shadow-lg" data-aos="fade-left">
+                    <div class="flex flex-col sm:flex-row gap-2 rounded-2xl overflow-hidden">
+                        <div class="relative w-full">
+                            <img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?auto=format&fit=crop&w=400&q=80" alt="Antes" class="w-full h-80 object-cover">
+                            <span class="absolute top-4 left-4 bg-black/50 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-md">Antes</span>
+                        </div>
+                        <div class="relative w-full">
+                            <img src="https://images.unsplash.com/photo-1542206395-9feb3edaa68d?auto=format&fit=crop&w=400&q=80" alt="Depois" class="w-full h-80 object-cover border-l-4 border-white sm:border-l-2">
+                            <span class="absolute top-4 right-4 bg-rose-500 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg">Depois</span>
+                        </div>
+                    </div>
+                    <div class="mt-6 text-center">
+                        <h4 class="font-serif font-bold text-xl text-gray-900">Rinomodelação Estruturada</h4>
+                        <p class="text-gray-500 text-sm mt-1 italic">Resultado imediato com Ácido Hialurônico</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <button onclick="window.open(whatsappLink, '_blank')" class="bg-rose-100 text-rose-600 hover:bg-rose-200 px-8 py-3 rounded-full font-bold transition-all">
+                    Ver mais no Instagram
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Avaliações Google -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6" data-aos="fade-up">
+                <div>
+                    <div class="flex items-center gap-1 mb-2">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_id_logo.svg" alt="Google" class="h-6 mr-2">
+                        <i class="fa-solid fa-star text-yellow-400"></i>
+                        <i class="fa-solid fa-star text-yellow-400"></i>
+                        <i class="fa-solid fa-star text-yellow-400"></i>
+                        <i class="fa-solid fa-star text-yellow-400"></i>
+                        <i class="fa-solid fa-star text-yellow-400"></i>
+                    </div>
+                    <h2 class="text-3xl font-serif text-gray-900">O que dizem nossas clientes</h2>
+                </div>
+                <div class="text-right">
+                    <p class="text-gray-500 font-medium text-sm">Nota 5.0 baseada em 248 avaliações</p>
+                </div>
+            </div>
+
+            <!-- Swiper Carousel -->
+            <div class="swiper testimonialsSwiper px-4 pb-12">
+                <div class="swiper-wrapper">
+                    <!-- Review 1 -->
+                    <div class="swiper-slide h-auto">
+                        <div class="bg-nude p-8 rounded-3xl h-full border border-gray-100 flex flex-col shadow-sm">
+                            <div class="flex items-center gap-4 mb-4">
+                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&q=80" class="w-12 h-12 rounded-full object-cover">
+                                <div>
+                                    <h5 class="font-bold text-gray-900 text-sm">Mariana Costa</h5>
+                                    <p class="text-[10px] text-gray-400 italic">Há uma semana</p>
+                                </div>
+                            </div>
+                            <div class="flex text-yellow-400 text-xs mb-3">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-gray-600 leading-relaxed text-xs flex-grow">"Fiz minha harmonização com a Dra. e amei o resultado! Ela foi super atenciosa e o resultado ficou super natural, exatamente como eu queria."</p>
+                        </div>
+                    </div>
+                    <!-- Review 2 -->
+                    <div class="swiper-slide h-auto">
+                        <div class="bg-nude p-8 rounded-3xl h-full border border-gray-100 flex flex-col shadow-sm">
+                            <div class="flex items-center gap-4 mb-4">
+                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80" class="w-12 h-12 rounded-full object-cover">
+                                <div>
+                                    <h5 class="font-bold text-gray-900 text-sm">Juliana Alves</h5>
+                                    <p class="text-[10px] text-gray-400 italic">Há um mês</p>
+                                </div>
+                            </div>
+                            <div class="flex text-yellow-400 text-xs mb-3">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-gray-600 leading-relaxed text-xs flex-grow">"Ambiente maravilhoso e atendimento impecável. O botox não deixou minha testa 'congelada', continuo com expressão mas sem as ruguinhas chatas!"</p>
+                        </div>
+                    </div>
+                    <!-- Review 3 -->
+                    <div class="swiper-slide h-auto">
+                        <div class="bg-nude p-8 rounded-3xl h-full border border-gray-100 flex flex-col shadow-sm">
+                            <div class="flex items-center gap-4 mb-4">
+                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" class="w-12 h-12 rounded-full object-cover">
+                                <div>
+                                    <h5 class="font-bold text-gray-900 text-sm">Beatriz Mendes</h5>
+                                    <p class="text-[10px] text-gray-400 italic">Há 3 meses</p>
+                                </div>
+                            </div>
+                            <div class="flex text-yellow-400 text-xs mb-3">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-gray-600 leading-relaxed text-xs flex-grow">"Clínica impecável em SP. Já tinha ido em outras, mas a Lumière ganha no detalhe e no pós-procedimento. Recomendo muito!"</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination mt-8"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Localização -->
+    <section class="w-full h-96 relative z-0">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.197368532453!2d-46.65646018502223!3d-23.5613396846824!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c8da0aa315%3A0xd59f9431f2c9776a!2sAv.%20Paulista%2C%201000!5e0!3m2!1spt-BR!2sbr!4v1680000000000!5m2!1spt-BR!2sbr" 
+            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contato" class="bg-gray-900 text-gray-300 pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <div>
+                    <div class="flex items-center mb-6">
+                        <i class="fa-solid fa-spa text-rose-500 text-3xl mr-2"></i>
+                        <span class="font-serif text-3xl font-bold text-white">Lumière</span>
+                    </div>
+                    <p class="text-sm text-gray-400 mb-6">Excelência em rejuvenescimento facial natural.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-sm">Links Rápidos</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" onclick="this.blur()" class="hover:text-rose-400 transition-colors">Início</a></li>
+                        <li><a href="#sobre" onclick="this.blur()" class="hover:text-rose-400 transition-colors">Sobre Nós</a></li>
+                        <li><a href="#servicos" onclick="this.blur()" class="hover:text-rose-400 transition-colors">Tratamentos</a></li>
+                        <li><a href="#resultados" onclick="this.blur()" class="hover:text-rose-400 transition-colors">Resultados</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-sm">Contato</h4>
+                    <p class="text-sm mb-4">Av. Paulista, 1000 - SP</p>
+                    <p class="text-sm font-bold text-rose-400">(11) 99999-9999</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-sm">Siga-nos</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-xl hover:text-rose-500 transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="text-xl hover:text-rose-500 transition-colors"><i class="fa-brands fa-facebook"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-xs text-gray-500">
+                <p>&copy; 2023 Clínica Lumière. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botão WhatsApp Flutuante -->
+    <a href="#" onclick="window.open(whatsappLink, '_blank'); return false;" class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white w-14 h-14 rounded-full flex items-center justify-center text-3xl shadow-lg whatsapp-float hover:scale-110 transition-all">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script>
+        AOS.init({ once: true, duration: 800 });
+
+        // Swiper Initialization
+        new Swiper('.testimonialsSwiper', {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            pagination: { el: '.swiper-pagination', clickable: true },
+            breakpoints: {
+                640: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 }
+            },
+            autoplay: { delay: 5000 }
+        });
+
+        // Mobile Menu
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+        menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => menu.classList.add('hidden')));
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('shadow-md');
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            } else {
+                navbar.classList.remove('shadow-md');
+                navbar.style.background = 'rgba(255, 255, 255, 0.85)';
+            }
+        });
+    </script>
+</body>
+</html>
